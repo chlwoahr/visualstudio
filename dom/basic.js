@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded',function(){
   list[1].style.background = 'yellow';
 
   //DOM 생성.
-  //createElement(생성할 변수)
+  //createElement(생성할 태그)
   let newList=document.createElement('li'); // <li> 리스트 생성
   newList.innerHTML='Mango';
   console.log(newList);
