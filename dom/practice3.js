@@ -1,5 +1,5 @@
 // dom/practice3.js
-
+[]
 let data = [{
   id: 101,
   name: '홍길동',
@@ -37,9 +37,9 @@ function callbackFnc() {
   let btn = document.querySelector('button');
   btn.addEventListener('click', function(){
     let obj = {}
-    let userName = document.getElementById('userName').value;
+    let userName = document.getElementById('username').value;
     obj.name = userName;
-    let userAge = document.getElementById('userAge').value;
+    let userAge = document.getElementById('userage').value;
     obj.age = userAge;
     obj.id = 110;
 
