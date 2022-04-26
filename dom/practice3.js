@@ -1,22 +1,127 @@
-//dom/practice3.js
+// dom/practice3.js
 
-document.addEventListener('DOMContentLoaded',function(){ // 전체로딩후 실행
-let but = document.querySelector('button');
-but.addEventListener('click',function(){
-  let na = document.getElementById('username').value
-  let ag = document.getElementById('userage').value
+let data = [{
+  id: 101,
+  name: '홍길동',
+  age: 20
+}, {
+  id: 102,
+  name: '김길동',
+  age: 22
+}, {
+  id: 103,
+  name: '박길동',
+  age: 25
+}];
 
-  let s1 = document.createElement('span') 
-  s1.innerHTML=na;                  // <span>na</span>
-  let s2 = document.createElement('span')
-  s2.innerHTML=ag;                  // <span>ag</span>
+document.addEventListener('DOMContentLoaded', callbackFnc);
 
-  let di = document.createElement('div')//<div></div> 
-  di.appendChild(s1);// div태그에 자식요소추가 <div><span>na</span></div>
-  di.appendChild(s2);// div태그에 자식요소추가 <div><span>na</span><span>ag</span></div>
-  let di1 = document.getElementById('show')
-  di1.appendChild(di);
+function callbackFnc() {
+  console.log(window);
 
-})
-})
 
+  // 사용하는 변수선언.
+  let table, thead, tbody, tr, td, text;
+  // table 생성.
+  table = document.createElement('table'); // <table>
+  table.setAttribute('border', 1); // <table border=1>
+  // thead에 하위요소를 작성한 다음 table 하위요소로 추가.
+  thead = makeHead();
+  table.appendChild(thead);
+  tbody = makeBody(data);
+  table.appendChild(tbody);
+  // show 요소의 하위 table append.
+  document.getElementById('show').appendChild(table);
+
+  // 추가 버튼 이벤트.
+  let btn = document.querySelector('button');
+  btn.addEventListener('click', function(){
+    let obj = {}
+    let userName = document.getElementById('userName').value;
+    obj.name = userName;
+    let userAge = document.getElementById('userAge').value;
+    obj.age = userAge;
+    obj.id = 110;
+
+    document.querySelector('table>tbody').appendChild(makeTr(obj));
+  })
+//  // {김민수, 25}, 추가하기
+//  let newObj = {id:105, name:'김민수', age:25}
+//  document.querySelector('table>tbody').appendChild(makeTr(newObj));
+//  // console.log(makeTr(newObj));
+// }
+}
+function makeTr(obj) {
+
+  let fields = ['name', 'age'];
+  // 첫번째 라인.
+  let tr = document.createElement('tr');
+  tr.setAttribute('id', obj.id);
+
+  // name, age 필드 => 갯수만큼 td 생성. 
+  fields.forEach(function (field) {
+    let td = document.createElement('td');
+    let text = document.createTextNode(obj[field] + `${field=="age"?"살":""}`);
+    td.appendChild(text); // <td>홍길동</td>
+    tr.appendChild(td); // <tr><td>홍길동</td></tr>  
+  });
+  let btn = document.createElement('button'); // <button>삭제</button>
+  btn.innerHTML = '삭제';
+  btn.addEventListener('click', deleteCallBack)
+  let td = document.createElement('td');
+  td.appendChild(btn);
+  tr.appendChild(td);
+
+
+  return tr;
+}
+
+function deleteCallBack(){
+  // evnt.target.parentElement.parentElement.remove(); // target 발생하는대상 this로 매개변수없이
+  this.parentElement.parentElement.remove();
+}
+// function deleteCallBack(evnt){ 매개변수있을때
+//   evnt.target.parentElement.parentElement.remove(); // target 발생하는대상
+  
+//   evnt.parentElement.parentElement.remove();
+// }
+
+function makeBody(objAry) {
+
+  // [{name, age},{},{},{}]
+  // tbody 생성.
+  let tbody = document.createElement('tbody');
+
+  objAry.forEach(function (obj) {
+    // obj => {name:'', age: }
+    tbody.appendChild(makeTr(obj)); // <tbody><tr><td>홍길동</td><td>20살</td></tr></tbody>
+
+  });
+
+  return tbody;
+}
+
+function makeHead() {
+  // thead 생성.
+  let thead = document.createElement('thead');
+
+  let tr = document.createElement('tr');
+  let td = document.createElement('th');
+  let text = document.createTextNode('이름');
+  td.appendChild(text); // <td>이름</td>
+  tr.appendChild(td); // <tr><td>이름</td></tr>
+
+  td = document.createElement('th');
+  text = document.createTextNode('나이');
+  td.appendChild(text); // <td>나이</td>
+  tr.appendChild(td); // <tr><td>이름</td><td>나이</td></tr>
+
+  td = document.createElement('th');
+  text = document.createTextNode('삭제');
+  td.appendChild(text); // <td>나이</td>
+  tr.appendChild(td); // <tr><td>이름</td><td>나이</td></tr>
+
+  thead.appendChild(tr); // <thead><tr><td>이름</td><td>나이</td></tr></thead>
+
+  return thead;
+}

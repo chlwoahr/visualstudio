@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dom/main.html</title>
+</head>
+<body>
+  <div id="addFom">
+  
+    <form name = "frm" action="../index.html" method="post" onsubmit="saveFnc(event)">
+      ID: <input type="text" name="uid" id="usesrId" value="101"><br>
+      Name: <input type="text" name="uname" id="userName"value="홍길동"><br>
+      Score: <input type="text" name="uscore" id="userScore"value="80"><br>
+      Age: <input type="text" name="uage" id="userAge"value="22"><br>
+      <input type="submit" value="저장">
+    </form>
+  </div>
+  <div id="show">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>아이디</th>
+          <th>이름</th>
+          <th>점수</th>
+          <th>나이</th>
+        </tr>
+      </thead>
+      <tbody id="body">
+
+      </tbody>
+    </table>
+  </div>
+  <script>
+    //페이지가 로딩 된 후에 데이터를 화면에 뿌려주기.
+    document.addEventListener('DOMContentLoaded', init());
+    
+    function init(){
+      let data = [
+                   {id:101,name:'홍길동',score:80,age:19},
+                   {id:102,name:'박길동',score:88,age:19},
+                   {id:103,name:'김길동',score:95,age:27}
+
+                   
+                ];
+                data.forEach(function(ee){
+                  
+                  document.getElementById('body').appendChild(makeTr(ee));
+                });
+                
+    }
+    
+  
+  
+
+    
+    // console.log(document.forms['frm'].elements['uid'].value);
+      function saveFnc(e){
+      e.preventDefault(); // on submit 기본기능 차단 : 페이지를 넘어가지않는 기능
+      let id = document.forms['frm'].elements['uid'].value;
+      let name = document.forms['frm'].elements['uname'].value;
+      let score = document.forms['frm'].elements['uscore'].value;
+      let age = document.forms['frm'].elements['uage'].value;
+
+      if(id == ''|| name == '' || score == '' || age==''){
+        alert('값을 입력하세요');
+        return;
+      }
+      // let person = {};
+      // person.id = id;
+      // person.name = name;
+      // person.score = score;
+      // person.age = age;
+      
+      let person = {
+      id: id,
+      name: name,
+      score: score,
+      age: age
+      };
+      document.getElementById('body').appendChild(makeTr(person));
+
+      //초기화
+      document.forms['frm'].elements['uid'].value = '';
+      document.forms['frm'].elements['uname'].value = '';
+      document.forms['frm'].elements['uscore'].value = '';
+      document.forms['frm'].elements['uage'].value = '';
+
+      //포커스
+      document.forms['frm'].elements['uid'].focus();
+      
+    }
+    
+    function makeTr(obj){ // obj = {id=?, name=?, score=?, age=?}
+      let tr = document.createElement('tr');
+
+      for(let field in obj){
+        let td = document.createElement('td');
+      td.innerHTML = obj[field]; //obj.id, obj.name, obj.score, obj.age
+      tr.appendChild(td);
+      }
+      return tr;      
+      }
+//<form name = "frm" action="../index.html" method="post" onsubmit="saveFnc(event)"> action 실행하면 보낼주소
+  </script>
+</body>
+</html>
