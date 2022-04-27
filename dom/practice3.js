@@ -65,12 +65,12 @@ function makeTr(obj) {
     td.appendChild(text); // <td>홍길동</td>
     tr.appendChild(td); // <tr><td>홍길동</td></tr>  
   });
-  let btn = document.createElement('button'); // <button>삭제</button>
-  btn.innerHTML = '삭제';
-  btn.addEventListener('click', deleteCallBack)
-  let td = document.createElement('td');
-  td.appendChild(btn);
-  tr.appendChild(td);
+  // let btn = document.createElement('button'); // <button>삭제</button>
+  // btn.innerHTML = '삭제';
+  // btn.addEventListener('click', deleteCallBack)
+  // let td = document.createElement('td');
+  // td.appendChild(btn);
+  // tr.appendChild(td);
 
 
   return tr;
